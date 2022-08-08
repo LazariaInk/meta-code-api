@@ -1,9 +1,7 @@
 package com.lazaria.metacode.controller;
 
-import com.lazaria.metacode.dto.Chapter;
 import com.lazaria.metacode.dto.Topic;
-import com.lazaria.metacode.repository.ChapterRepository;
-import com.lazaria.metacode.repository.TopicRepository;
+import com.lazaria.metacode.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +12,28 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/admin/topic")
 public class TopicController {
+
     @Autowired
-    private TopicRepository topicRepository;
-    @Autowired
-    private ChapterRepository chapterRepository;
+    private TopicService topicService;
 
     @PostMapping("/create")
     public Topic createTopic(@RequestBody Topic topic) {
-        return topicRepository.save(topic);
+        return topicService.createTopic(topic);
     }
 
     @GetMapping("/all")
     public List<Topic> findAllTopics() {
-        return topicRepository.findAll();
+        return topicService.findAllTopics();
+    }
+
+    @DeleteMapping("/delete/{topicId}")
+    public void deleteTopic(@PathVariable int topicId) {
+        topicService.deleteTopic(topicId);
+    }
+
+    @PutMapping("edit/{topicId}")
+    public Optional<Topic> editeTopicName(@RequestBody Topic topicForEdit, @PathVariable int topicId) {
+        return topicService.editeTopicName(topicForEdit, topicId);
     }
 }
+
