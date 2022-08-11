@@ -1,12 +1,19 @@
 package com.lazaria.metacode.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "LessonDTO")
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Table(name = "lesson")
 public class Lesson {
 
     @Id
@@ -16,9 +23,8 @@ public class Lesson {
     @Column(name = "lessonName")
     public String lessonName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chapterId")
-    public Chapter chapter;
-
+    @OneToMany(targetEntity = LessonZone.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "lesson_lessonZone_fk", referencedColumnName = "lessonId")
+    private List<LessonZone> lessonZones;
 
 }

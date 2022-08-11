@@ -42,7 +42,7 @@ public class ChapterService {
                 });
     }
 
-    public void deleteChapterFromSpecificTopic(int chapterId) {
+    public void deleteChapterById(int chapterId) {
         chapterRepository.deleteById((chapterId));
     }
 
