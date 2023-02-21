@@ -1,8 +1,8 @@
 package com.lazaria.metacode.service;
 
 
-import com.lazaria.metacode.dto.Chapter;
-import com.lazaria.metacode.dto.Lesson;
+import com.lazaria.metacode.model.Chapter;
+import com.lazaria.metacode.model.Lesson;
 import com.lazaria.metacode.repository.ChapterRepository;
 import com.lazaria.metacode.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +47,13 @@ public class LessonService {
         lessonRepository.deleteById((lessonId));
     }
 
+    public void insertLessonContent(int lessonId, String lessonContent) {
+        Optional<Lesson> lesson = lessonRepository.findById(lessonId);
+        if (lesson.isPresent()) {
+            Lesson lessonToUpdate = lesson.get();
+            lessonToUpdate.setLessonContent(lessonContent);
+            lessonRepository.save(lessonToUpdate);
+        }
+    }
 }
 

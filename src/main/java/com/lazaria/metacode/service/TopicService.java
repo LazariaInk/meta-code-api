@@ -1,6 +1,6 @@
 package com.lazaria.metacode.service;
 
-import com.lazaria.metacode.dto.Topic;
+import com.lazaria.metacode.model.Topic;
 import com.lazaria.metacode.repository.ChapterRepository;
 import com.lazaria.metacode.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;

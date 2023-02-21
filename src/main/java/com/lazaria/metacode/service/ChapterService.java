@@ -1,7 +1,7 @@
 package com.lazaria.metacode.service;
 
-import com.lazaria.metacode.dto.Chapter;
-import com.lazaria.metacode.dto.Topic;
+import com.lazaria.metacode.model.Chapter;
+import com.lazaria.metacode.model.Topic;
 import com.lazaria.metacode.repository.ChapterRepository;
 import com.lazaria.metacode.repository.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,10 @@ public class ChapterService {
 
     public List<Chapter> getAllChaptersForSpecificTopic(int topicId) {
         return topicRepository.findById(topicId).get().getChapters();
+    }
+
+    public List<Chapter> getAllChapters() {
+        return chapterRepository.findAll();
     }
 
     public Optional<Topic> addChapterToTopic(Chapter newChapter, int topicId) {

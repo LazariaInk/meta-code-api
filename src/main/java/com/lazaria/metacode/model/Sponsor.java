@@ -1,5 +1,4 @@
-package com.lazaria.metacode.dto;
-
+package com.lazaria.metacode.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,18 +8,21 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Data
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "Role")
-public class Role {
+@Entity
+@Table(name = "sponsor")
+public class Sponsor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roleId;
+    private int sponsorId;
 
-    @Column(name ="roleName")
-    private String roleName;
+    @Column(name = "sponsorName")
+    public String topicName;
+
+    @Column(name = "instagramLink")
+    public String sponsorLink;
 
 }

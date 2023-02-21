@@ -1,7 +1,7 @@
 package com.lazaria.metacode.controller;
 
-import com.lazaria.metacode.dto.Chapter;
-import com.lazaria.metacode.dto.Topic;
+import com.lazaria.metacode.model.Chapter;
+import com.lazaria.metacode.model.Topic;
 import com.lazaria.metacode.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/admin/chapter")
 public class ChapterController {
@@ -19,6 +20,11 @@ public class ChapterController {
     @GetMapping("/all/{topicId}")
     List<Chapter> getAllChaptersForSpecificTopic(@PathVariable int topicId) {
         return chapterService.getAllChaptersForSpecificTopic(topicId);
+    }
+
+    @GetMapping("/all")
+    List<Chapter> getAllChapters() {
+        return chapterService.getAllChapters();
     }
 
     @PutMapping("/create/{topicId}")

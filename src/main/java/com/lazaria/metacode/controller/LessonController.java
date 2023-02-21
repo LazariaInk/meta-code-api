@@ -1,7 +1,7 @@
 package com.lazaria.metacode.controller;
 
-import com.lazaria.metacode.dto.Chapter;
-import com.lazaria.metacode.dto.Lesson;
+import com.lazaria.metacode.model.Chapter;
+import com.lazaria.metacode.model.Lesson;
 import com.lazaria.metacode.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/admin/lesson")
 public class LessonController {
@@ -34,6 +35,11 @@ public class LessonController {
     @DeleteMapping("/delete/{lessonId}")
     void deleteLessonById(@PathVariable int lessonId) {
         lessonService.deleteLessonById(lessonId);
+    }
+
+    @PutMapping("/{lessonId}/insert")
+    void insertContentInLesson(@RequestBody String lessonContent, @PathVariable int lessonId){
+        lessonService.insertLessonContent(lessonId, lessonContent);
     }
 
 }
