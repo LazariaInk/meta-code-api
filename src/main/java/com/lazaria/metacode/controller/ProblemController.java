@@ -1,14 +1,14 @@
 package com.lazaria.metacode.controller;
 
 
-import com.lazaria.metacode.dto.Problem;
+import com.lazaria.metacode.model.Problem;
 import com.lazaria.metacode.service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/admin/problem")
 public class ProblemController {
@@ -16,23 +16,28 @@ public class ProblemController {
     @Autowired
     private ProblemService problemService;
 
-    @PostMapping("/create")
-    public Problem createProblem(@RequestBody Problem problem) {
-        return problemService.createProblem(problem);
-    }
-
     @GetMapping("/all")
-    public List<Problem> findAllProblems() {
-        return problemService.findAllProblems();
+    public List<Problem> getAllProblems() {
+        return problemService.getAllProblems();
     }
 
-    @DeleteMapping("/delete/{sponsorId}")
-    public void deleteProblemById(@PathVariable int problemId) {
-        problemService.deleteProblemById(problemId);
+    @GetMapping("/{id}")
+    public Problem getProblemById(@PathVariable int id) {
+        return problemService.getProblemById(id);
     }
 
-    @PutMapping("edit/{problemId}")
-    public Optional<Problem> editProblem(@RequestBody Problem problemForEdit, @PathVariable int problemId) {
-        return problemService.editProblem(problemForEdit, problemId);
+    @PostMapping("/create")
+    public Problem addProblem(@RequestBody Problem problem) {
+        return problemService.addProblem(problem);
+    }
+
+    @PutMapping("edit/{id}")
+    public Problem updateProblem(@PathVariable int id, @RequestBody Problem updatedProblem) {
+        return problemService.updateProblem(id, updatedProblem);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteProblem(@PathVariable int id) {
+        problemService.deleteProblem(id);
     }
 }

@@ -1,7 +1,7 @@
 package com.lazaria.metacode.controller;
 
 
-import com.lazaria.metacode.dto.Sponsor;
+import com.lazaria.metacode.model.Sponsor;
 import com.lazaria.metacode.service.SponsorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

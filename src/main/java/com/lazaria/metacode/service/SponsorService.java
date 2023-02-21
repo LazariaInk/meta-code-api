@@ -1,6 +1,6 @@
 package com.lazaria.metacode.service;
 
-import com.lazaria.metacode.dto.Sponsor;
+import com.lazaria.metacode.model.Sponsor;
 import com.lazaria.metacode.repository.SponsorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

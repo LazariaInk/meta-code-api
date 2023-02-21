@@ -1,4 +1,4 @@
-package com.lazaria.metacode.dto;
+package com.lazaria.metacode.model;
 
 
 import lombok.AllArgsConstructor;
@@ -20,47 +20,46 @@ public class Problem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int problemId;
 
-    @Column(name = "sponsorName")
+    @Column(name="problemName")
     private String problemName;
 
-    @Column(name = "problemContent")
+    @Column(name = "problemContent",length = 5000)
     private String problemContent;
 
-    @Column(name = "problemSolution")
+    @Column(name = "problemSolution", length = 5000)
     private String problemSolution;
 
-    @Column(name = "problemImage")
-    private String problemImage;
-
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "problemComplexity")
     private ProblemComplexity problemComplexity;
 
     @Enumerated(EnumType.STRING)
+    @Column(name="problemTheme")
     private ProblemTheme problemTheme;
 
 
     public enum ProblemComplexity {
-        VERY_EASY,
-        EASY,
-        MEDIUM,
-        HARD,
-        VERY_HARD,
-        IMPOSSIBLE
+        FOARTE_USOR,
+        USOR,
+        MEDIU,
+        COMPLICAT,
+        STEVE_WOZNIAK
     }
 
     public enum ProblemTheme {
-        BINARY_SEARCH,
-        GEOMETRY,
-        TWO_INDICES,
-        MATRIX,
-        DYNAMIC_PROGRAMMING,
-        LONG_MATH,
-        GREEDY_ALGORITHM,
-        BEGINNER,
-        COMBINATORICS,
-        MATHEMATICAL_MODEL,
-        SIMPLE_MATHEMATICAL,
+        CAUTARE_BINARA,
+        GEOMETRIE,
+        MASIV_PATRAT,
+        PROGRAMARE_DINAMICA,
+        ALGORITMUL_LACOM,
+        INCEPATORI,
+        COMBINATORICA,
+        MODELARE,
         STRING,
+        RECURSIE,
+        SORTARE,
+        STRUCTURI_DE_DATE,
+        TEOREMA_GRAFELOR
     }
 
 }

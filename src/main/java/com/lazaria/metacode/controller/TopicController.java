@@ -1,6 +1,6 @@
 package com.lazaria.metacode.controller;
 
-import com.lazaria.metacode.dto.Topic;
+import com.lazaria.metacode.model.Topic;
 import com.lazaria.metacode.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/admin/topic")
 public class TopicController {
 

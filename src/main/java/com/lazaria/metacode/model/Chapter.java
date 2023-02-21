@@ -1,4 +1,4 @@
-package com.lazaria.metacode.dto;
+package com.lazaria.metacode.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
