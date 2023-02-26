@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/admin/chapter")
 public class ChapterController {
@@ -18,26 +18,31 @@ public class ChapterController {
     ChapterService chapterService;
 
     @GetMapping("/all/{topicId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     List<Chapter> getAllChaptersForSpecificTopic(@PathVariable int topicId) {
         return chapterService.getAllChaptersForSpecificTopic(topicId);
     }
 
     @GetMapping("/all")
+    @CrossOrigin(origins = "http://localhost:3000")
     List<Chapter> getAllChapters() {
         return chapterService.getAllChapters();
     }
 
     @PutMapping("/create/{topicId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Topic> addChapterToTopic(@RequestBody Chapter newChapter, @PathVariable int topicId) {
         return chapterService.addChapterToTopic(newChapter, topicId);
     }
 
     @PutMapping("/edit/{chapterId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Chapter> editChapter(@RequestBody Chapter editedChapter, @PathVariable int chapterId) {
         return chapterService.editChapter(editedChapter, chapterId);
     }
 
     @DeleteMapping("/delete/{chapterId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     void deleteChapterById(@PathVariable int chapterId) {
         chapterService.deleteChapterById(chapterId);
     }

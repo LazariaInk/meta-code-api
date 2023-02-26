@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/admin/problem")
 public class ProblemController {
@@ -17,26 +17,31 @@ public class ProblemController {
     private ProblemService problemService;
 
     @GetMapping("/all")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Problem> getAllProblems() {
         return problemService.getAllProblems();
     }
 
     @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Problem getProblemById(@PathVariable int id) {
         return problemService.getProblemById(id);
     }
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Problem addProblem(@RequestBody Problem problem) {
         return problemService.addProblem(problem);
     }
 
     @PutMapping("edit/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Problem updateProblem(@PathVariable int id, @RequestBody Problem updatedProblem) {
         return problemService.updateProblem(id, updatedProblem);
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public void deleteProblem(@PathVariable int id) {
         problemService.deleteProblem(id);
     }
