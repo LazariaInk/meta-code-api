@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping(path = "/admin/lesson")
 public class LessonController {
@@ -18,26 +18,31 @@ public class LessonController {
     LessonService lessonService;
 
     @GetMapping("/all/{chapterId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     List<Lesson> getAllLessonsForSpecificChapter(@PathVariable int chapterId) {
         return lessonService.getAllLessonsForSpecificChapter(chapterId);
     }
 
     @PutMapping("/create/{chapterId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Chapter> addLessonToChapter(@RequestBody Lesson newLesson, @PathVariable int chapterId) {
         return lessonService.addLessonToChapter(newLesson, chapterId);
     }
 
     @PutMapping("/edit/{lessonId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Lesson> editLesson(@RequestBody Lesson editedLesson, @PathVariable int lessonId) {
         return lessonService.editLesson(editedLesson, lessonId);
     }
 
     @DeleteMapping("/delete/{lessonId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     void deleteLessonById(@PathVariable int lessonId) {
         lessonService.deleteLessonById(lessonId);
     }
 
     @PutMapping("/{lessonId}/insert")
+    @CrossOrigin(origins = "http://localhost:3000")
     void insertContentInLesson(@RequestBody String lessonContent, @PathVariable int lessonId){
         lessonService.insertLessonContent(lessonId, lessonContent);
     }

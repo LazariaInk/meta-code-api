@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "admin/about")
 public class AboutController {
@@ -15,6 +15,7 @@ public class AboutController {
     private AboutService aboutService;
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "http://localhost:3000")
     public About updateAbout(@RequestBody About about) {
 
         return aboutService.updateAbout(about);
