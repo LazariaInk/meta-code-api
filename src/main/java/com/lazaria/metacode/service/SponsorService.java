@@ -27,10 +27,10 @@ public class SponsorService {
         sponsorRepository.deleteById(sponsorId);
     }
 
-    public Optional<Sponsor> editeTopicName(Sponsor sponsorForEdit, int sponsorId) {
+    public Optional<Sponsor> editeSponsor(Sponsor sponsorForEdit, int sponsorId) {
         return sponsorRepository.findById(sponsorId)
                 .map(sponsor -> {
-                    sponsor.setTopicName(sponsorForEdit.getTopicName());
+                    sponsor.setSponsorName(sponsorForEdit.getSponsorName());
                     sponsor.setSponsorLink(sponsorForEdit.getSponsorLink());
                     return sponsorRepository.save(sponsor);
                 });

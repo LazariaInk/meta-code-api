@@ -37,6 +37,6 @@ public class SponsorsController {
     @PutMapping("edit/{sponsorId}")
     @CrossOrigin(origins = "http://localhost:3000")
     public Optional<Sponsor> editSponsor(@RequestBody Sponsor sponsorForEdit, @PathVariable int sponsorId) {
-        return sponsorService.editeTopicName(sponsorForEdit, sponsorId);
+        return sponsorService.editeSponsor(sponsorForEdit, sponsorId);
     }
 }
