@@ -20,7 +20,7 @@ public class Sponsor {
     private int sponsorId;
 
     @Column(name = "sponsorName")
-    public String topicName;
+    public String sponsorName;
 
     @Column(name = "instagramLink")
     public String sponsorLink;
