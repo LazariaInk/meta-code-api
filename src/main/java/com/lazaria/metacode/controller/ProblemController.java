@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "/admin/problem")
 public class ProblemController {
@@ -27,6 +26,10 @@ public class ProblemController {
     public Problem getProblemById(@PathVariable int id) {
         return problemService.getProblemById(id);
     }
+
+    @GetMapping("/{problemName}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    public Problem getProblemByName(@PathVariable String problemName) {return problemService.findByProblemName(problemName);}
 
     @PostMapping("/create")
     @CrossOrigin(origins = "http://localhost:3000")

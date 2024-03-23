@@ -5,8 +5,6 @@ import com.lazaria.metacode.service.AboutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-//@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RestController
 @RequestMapping(path = "admin/about")
 public class AboutController {

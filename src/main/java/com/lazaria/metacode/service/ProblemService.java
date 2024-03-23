@@ -22,6 +22,10 @@ public class ProblemService {
         return problemRepository.findById(problemId).orElse(null);
     }
 
+    public Problem findByProblemName(String problemName) {
+        return problemRepository.findByProblemName(problemName);
+    }
+
     public Problem addProblem(Problem problem) {
         return problemRepository.save(problem);
     }
