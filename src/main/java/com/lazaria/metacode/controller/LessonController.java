@@ -2,15 +2,20 @@ package com.lazaria.metacode.controller;
 
 import com.lazaria.metacode.model.Chapter;
 import com.lazaria.metacode.model.Lesson;
+import com.lazaria.metacode.model.dao.LessonContentDTO;
 import com.lazaria.metacode.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/admin/lesson")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LessonController {
 
     @Autowired
@@ -41,9 +46,11 @@ public class LessonController {
     }
 
     @PutMapping("/{lessonId}/insert")
-    @CrossOrigin(origins = "http://localhost:3000")
-    void insertContentInLesson(@RequestBody String lessonContent, @PathVariable int lessonId){
-        lessonService.insertLessonContent(lessonId, lessonContent);
+    public ResponseEntity<?> insertContentInLesson(@RequestBody LessonContentDTO lessonContentDTO,
+                                                   @PathVariable int lessonId) {
+        lessonService.insertLessonContent(lessonId, lessonContentDTO.getLessonContent(), lessonContentDTO.getImages());
+        return ResponseEntity.ok().build();
     }
+
 
 }

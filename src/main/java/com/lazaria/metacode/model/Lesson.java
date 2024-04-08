@@ -1,13 +1,13 @@
 package com.lazaria.metacode.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
 
 @Data
 @Entity
@@ -24,7 +24,11 @@ public class Lesson {
     @Column(name = "lessonName")
     public String lessonName;
 
-   @Column(name="lessonContent")
+    @Column(name="lessonContent")
     public String lessonContent;
+
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @JsonIgnore // Add this annotation to prevent serialization of images
+    private List<Image> images;
 
 }
