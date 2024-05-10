@@ -24,18 +24,28 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        // Check if there are any users in the database
+        boolean isFirstUser = repository.count() == 0;
+
+        // Set the role to ADMIN if this is the first user, otherwise set to USER
+        Role userRole = isFirstUser ? Role.ADMIN : Role.USER;
+
         var user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(userRole)  // Use the determined role
                 .build();
+
         var savedUser = repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(savedUser); // Generate token for the saved user
+
         saveUserToken(savedUser, jwtToken);
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
