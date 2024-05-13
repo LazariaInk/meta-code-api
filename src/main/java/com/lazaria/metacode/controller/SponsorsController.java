@@ -17,25 +17,25 @@ public class SponsorsController {
     private SponsorService sponsorService;
 
     @PostMapping("/create")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Sponsor createSponsor(@RequestBody Sponsor sponsor) {
         return sponsorService.createSponsor(sponsor);
     }
 
     @GetMapping("/all")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Sponsor> findAllSponsors() {
         return sponsorService.findAllSponsors();
     }
 
     @DeleteMapping("/delete/{sponsorId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public void deleteSponsor(@PathVariable int sponsorId) {
         sponsorService.deleteSponsorById(sponsorId);
     }
 
     @PutMapping("edit/{sponsorId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Optional<Sponsor> editSponsor(@RequestBody Sponsor sponsorForEdit, @PathVariable int sponsorId) {
         return sponsorService.editeSponsor(sponsorForEdit, sponsorId);
     }

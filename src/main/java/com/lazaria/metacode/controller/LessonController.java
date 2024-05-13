@@ -15,32 +15,32 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/admin/lesson")
-@CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class LessonController {
 
     @Autowired
     LessonService lessonService;
 
     @GetMapping("/all/{chapterId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     List<Lesson> getAllLessonsForSpecificChapter(@PathVariable int chapterId) {
         return lessonService.getAllLessonsForSpecificChapter(chapterId);
     }
 
     @PutMapping("/create/{chapterId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Chapter> addLessonToChapter(@RequestBody Lesson newLesson, @PathVariable int chapterId) {
         return lessonService.addLessonToChapter(newLesson, chapterId);
     }
 
     @PutMapping("/edit/{lessonId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     Optional<Lesson> editLesson(@RequestBody Lesson editedLesson, @PathVariable int lessonId) {
         return lessonService.editLesson(editedLesson, lessonId);
     }
 
     @DeleteMapping("/delete/{lessonId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     void deleteLessonById(@PathVariable int lessonId) {
         lessonService.deleteLessonById(lessonId);
     }

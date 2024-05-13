@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/problems")
-@CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PublicProblemController {
     @Autowired
     private ProblemRepository problemRepository;

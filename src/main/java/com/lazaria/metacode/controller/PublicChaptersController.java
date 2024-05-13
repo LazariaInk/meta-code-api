@@ -14,7 +14,7 @@ public class PublicChaptersController {
     private ChapterService chapterService;
 
     @GetMapping("/{topicId}/all")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<Chapter> findAllChapters(@PathVariable int topicId) {
         return chapterService.getAllChaptersForSpecificTopic(topicId);
     }
