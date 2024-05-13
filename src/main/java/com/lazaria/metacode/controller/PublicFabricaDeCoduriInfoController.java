@@ -18,7 +18,7 @@ public class PublicFabricaDeCoduriInfoController {
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public ResponseEntity<FabricaDeCoduriInfo> getFabricaDeCoduriInfoById(@PathVariable int id) {
         FabricaDeCoduriInfo fabricaDeCoduriInfo = fabricaDeCoduriInfoService.getFabricaDeCoduriInfoById(id);
         if (fabricaDeCoduriInfo != null) {
