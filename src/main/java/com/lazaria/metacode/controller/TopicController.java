@@ -18,25 +18,25 @@ public class TopicController {
     private TopicService topicService;
 
     @PostMapping("/create")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public Topic createTopic(@RequestBody Topic topic) {
         return topicService.createTopic(topic);
     }
 
     @GetMapping("/all")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public List<Topic> findAllTopics() {
         return topicService.findAllTopics();
     }
 
     @DeleteMapping("/delete/{topicId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public void deleteTopic(@PathVariable int topicId) {
         topicService.deleteTopic(topicId);
     }
 
     @PutMapping("edit/{topicId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public Optional<Topic> editeTopicName(@RequestBody Topic topicForEdit, @PathVariable int topicId) {
         return topicService.editeTopicName(topicForEdit, topicId);
     }

@@ -19,7 +19,7 @@ public class PublicLessonController {
     private LessonRepository lessonRepository;
 
     @GetMapping("/{lessonId}/content")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     public ResponseEntity<LessonContentDTO> getLessonContent(@PathVariable int lessonId) {
         Optional<Lesson> lessonOpt = lessonRepository.findById(lessonId);
         return lessonOpt.map(lesson -> {

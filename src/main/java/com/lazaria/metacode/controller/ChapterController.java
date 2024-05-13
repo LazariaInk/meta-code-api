@@ -17,31 +17,31 @@ public class ChapterController {
     ChapterService chapterService;
 
     @GetMapping("/all/{topicId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     List<Chapter> getAllChaptersForSpecificTopic(@PathVariable int topicId) {
         return chapterService.getAllChaptersForSpecificTopic(topicId);
     }
 
     @GetMapping("/all")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     List<Chapter> getAllChapters() {
         return chapterService.getAllChapters();
     }
 
     @PutMapping("/create/{topicId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     Optional<Topic> addChapterToTopic(@RequestBody Chapter newChapter, @PathVariable int topicId) {
         return chapterService.addChapterToTopic(newChapter, topicId);
     }
 
     @PutMapping("/edit/{chapterId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     Optional<Chapter> editChapter(@RequestBody Chapter editedChapter, @PathVariable int chapterId) {
         return chapterService.editChapter(editedChapter, chapterId);
     }
 
     @DeleteMapping("/delete/{chapterId}")
-    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com/")
     void deleteChapterById(@PathVariable int chapterId) {
         chapterService.deleteChapterById(chapterId);
     }
