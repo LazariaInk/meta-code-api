@@ -27,10 +27,10 @@ public class SecurityConfiguration {
                 .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/authenticate").permitAll()  // Allow everyone to access /api/v1/auth/authenticate
-                .requestMatchers("/admin/login", "/admin/register").permitAll()  // Allow everyone to access /admin/login and /admin/register
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")  // Restrict access to /admin/** to only users with ROLE_ADMIN
-                .anyRequest().authenticated()  // Require authentication for all other requests
+                .requestMatchers("/api/v1/auth/authenticate").permitAll()  // Asigură accesul nelimitat la acest endpoint
+                .requestMatchers("/admin/login", "/admin/register").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
