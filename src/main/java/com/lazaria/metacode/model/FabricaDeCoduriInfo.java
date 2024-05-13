@@ -18,46 +18,46 @@ public class FabricaDeCoduriInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fabricaDeCoduriInfoId;
 
-    @Column(name = "aboutFooterContent",columnDefinition="VARCHAR")
+    @Column(name = "aboutFooterContent",columnDefinition="VARCHAR(1000)")
     private String aboutFooter; //este
 
-    @Column(name="donateFooterContent",columnDefinition="VARCHAR")
+    @Column(name="donateFooterContent",columnDefinition="VARCHAR(1000)")
     private String donateFooterContent; //este
 
-    @Column(name="contactFooterContent",columnDefinition="VARCHAR")
+    @Column(name="contactFooterContent",columnDefinition="VARCHAR(1000)")
     private String contactFooterContent; //este
 
-    @Column(name = "discordLink",columnDefinition="VARCHAR")
+    @Column(name = "discordLink",columnDefinition="VARCHAR(1000)")
     private String discordLink; // este
 
-    @Column(name="tikTokLink",columnDefinition="VARCHAR")
+    @Column(name="tikTokLink",columnDefinition="VARCHAR(1000)")
     private String tikTokLink; // este
 
-    @Column(name = "instagramLink",columnDefinition="VARCHAR")
+    @Column(name = "instagramLink",columnDefinition="VARCHAR(1000)")
     private String instagramLink; //este
 
-    @Column(name = "youtubeLink",columnDefinition="VARCHAR")
+    @Column(name = "youtubeLink",columnDefinition="VARCHAR(1000)")
     private String youtubeLink; // este
 
-    @Column(name = "ownerInfo",columnDefinition="VARCHAR")
+    @Column(name = "ownerInfo",columnDefinition="VARCHAR(1000)")
     private String ownerInfo; // este
 
-    @Column(name = "motivationalMessage",columnDefinition="VARCHAR")
+    @Column(name = "motivationalMessage",columnDefinition="VARCHAR(1000)")
     private String motivationalMessage; //este
 
-    @Column(name="infoHomeMessage",columnDefinition="VARCHAR")
+    @Column(name="infoHomeMessage",columnDefinition="VARCHAR(1000)")
     private String infoHomeMessage; // este
 
-    @Column(name="introHomeMessage",columnDefinition="VARCHAR")
+    @Column(name="introHomeMessage",columnDefinition="VARCHAR(1000)")
     private String introHomeMessage; // este
 
-    @Column(name="titleHome",columnDefinition="VARCHAR")
+    @Column(name="titleHome",columnDefinition="VARCHAR(1000)")
     private String titleHome; // este
 
-    @Column(name="donateTitle",columnDefinition="VARCHAR")
+    @Column(name="donateTitle",columnDefinition="VARCHAR(1000)")
     private String donateTitle; //nui
 
-    @Column(name = "donateContent",columnDefinition="VARCHAR")
+    @Column(name = "donateContent",columnDefinition="VARCHAR(1000)")
     private String donateContent; //nui
 
 }
