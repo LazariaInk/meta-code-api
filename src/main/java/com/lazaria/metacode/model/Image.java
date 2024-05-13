@@ -23,6 +23,7 @@
         private String fileName;
 
         @Lob
+        @Column(name = "base64Data",columnDefinition="LONGBLOB")
         private String base64Data;
 
         @ManyToOne
