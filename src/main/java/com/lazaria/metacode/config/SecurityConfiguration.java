@@ -30,7 +30,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/admin/**")
                 .authenticated()
-                .requestMatchers("/api/v1/auth/authenticate").permitAll()
                 .anyRequest()
                 .permitAll()
                 .and()
@@ -44,7 +43,6 @@ public class SecurityConfiguration {
                 .addLogoutHandler(logoutHandler)
                 .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
         ;
-
         return http.build();
     }
 }
