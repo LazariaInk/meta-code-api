@@ -13,7 +13,7 @@ public class AboutController {
     private AboutService aboutService;
 
     @PutMapping("/update")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
     public About updateAbout(@RequestBody About about) {
 
         return aboutService.updateAbout(about);

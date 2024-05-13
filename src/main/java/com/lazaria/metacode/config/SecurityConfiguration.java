@@ -28,10 +28,9 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/admin/**")
-                .authenticated()
-                .anyRequest()
-                .permitAll()
+                .requestMatchers("/admin/login", "/admin/register").permitAll() // Allow everyone to access /admin/login and /admin/register
+                .requestMatchers("/admin/**").hasAuthority("ADMIN") // Restrict access to /admin/** to only users with ROLE_ADMIN
+                .anyRequest().permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -41,8 +40,7 @@ public class SecurityConfiguration {
                 .logout()
                 .logoutUrl("/api/v1/auth/logout")
                 .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-        ;
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
         return http.build();
     }
