@@ -25,12 +25,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-                .csrf()
-                .disable()
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/admin/login", "/admin/register").permitAll() // Allow everyone to access /admin/login and /admin/register
-                .requestMatchers("/admin/**").hasAuthority("ADMIN") // Restrict access to /admin/** to only users with ROLE_ADMIN
-                .anyRequest().permitAll()
+                .requestMatchers("/api/v1/auth/authenticate").permitAll()  // Allow everyone to access /api/v1/auth/authenticate
+                .requestMatchers("/admin/login", "/admin/register").permitAll()  // Allow everyone to access /admin/login and /admin/register
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")  // Restrict access to /admin/** to only users with ROLE_ADMIN
+                .anyRequest().authenticated()  // Require authentication for all other requests
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
