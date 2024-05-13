@@ -25,13 +25,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and()
-                .csrf()
-                .disable()
+                .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/admin/**")
-                .authenticated()
-                .anyRequest()
-                .permitAll()
+                .requestMatchers("/api/v1/auth/authenticate").permitAll()  // Asigură accesul nelimitat la acest endpoint
+                .requestMatchers("/admin/login", "/admin/register").permitAll()
+                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -41,8 +40,7 @@ public class SecurityConfiguration {
                 .logout()
                 .logoutUrl("/api/v1/auth/logout")
                 .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-        ;
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
 
         return http.build();
     }

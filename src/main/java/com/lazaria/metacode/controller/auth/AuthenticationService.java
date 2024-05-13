@@ -14,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -54,6 +56,11 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
+        Optional<User> user1 = repository.findByUsername("lored2010");
+
+        System.out.println("=======================");
+        System.out.println(passwordEncoder.encode(user1.get().getPassword()));
+        System.out.println(user1.get().getPassword());
         var user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);

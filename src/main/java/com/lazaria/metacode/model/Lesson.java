@@ -24,7 +24,8 @@ public class Lesson {
     @Column(name = "lessonName")
     public String lessonName;
 
-    @Column(name="lessonContent")
+    @Lob
+    @Column(name="lessonContent",columnDefinition="LONGBLOB")
     public String lessonContent;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)

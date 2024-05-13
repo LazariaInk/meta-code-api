@@ -17,7 +17,7 @@ public class PublicTopicsController {
     private TopicService topicService;
 
     @GetMapping("/all")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "https://www.fabricadecoduri.com")
     public List<Topic> findAllTopics() {
         return topicService.findAllTopics();
     }
