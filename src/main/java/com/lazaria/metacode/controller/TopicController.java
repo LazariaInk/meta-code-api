@@ -41,4 +41,3 @@ public class TopicController {
         return topicService.editeTopicName(topicForEdit, topicId);
     }
 }
-

@@ -18,46 +18,46 @@ public class FabricaDeCoduriInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fabricaDeCoduriInfoId;
 
-    @Column(name = "aboutFooterContent")
+    @Column(name = "aboutFooterContent",columnDefinition="VARCHAR(1000)")
     private String aboutFooter; //este
 
-    @Column(name="donateFooterContent")
+    @Column(name="donateFooterContent",columnDefinition="VARCHAR(1000)")
     private String donateFooterContent; //este
 
-    @Column(name="contactFooterContent")
+    @Column(name="contactFooterContent",columnDefinition="VARCHAR(1000)")
     private String contactFooterContent; //este
 
-    @Column(name = "discordLink")
+    @Column(name = "discordLink",columnDefinition="VARCHAR(1000)")
     private String discordLink; // este
 
-    @Column(name="tikTokLink")
+    @Column(name="tikTokLink",columnDefinition="VARCHAR(1000)")
     private String tikTokLink; // este
 
-    @Column(name = "instagramLink")
+    @Column(name = "instagramLink",columnDefinition="VARCHAR(1000)")
     private String instagramLink; //este
 
-    @Column(name = "youtubeLink")
+    @Column(name = "youtubeLink",columnDefinition="VARCHAR(1000)")
     private String youtubeLink; // este
 
-    @Column(name = "ownerInfo")
+    @Column(name = "ownerInfo",columnDefinition="VARCHAR(1000)")
     private String ownerInfo; // este
 
-    @Column(name = "motivationalMessage")
+    @Column(name = "motivationalMessage",columnDefinition="VARCHAR(1000)")
     private String motivationalMessage; //este
 
-    @Column(name="infoHomeMessage")
+    @Column(name="infoHomeMessage",columnDefinition="VARCHAR(1000)")
     private String infoHomeMessage; // este
 
-    @Column(name="introHomeMessage")
+    @Column(name="introHomeMessage",columnDefinition="VARCHAR(1000)")
     private String introHomeMessage; // este
 
-    @Column(name="titleHome")
+    @Column(name="titleHome",columnDefinition="VARCHAR(1000)")
     private String titleHome; // este
 
-    @Column(name="donateTitle")
+    @Column(name="donateTitle",columnDefinition="VARCHAR(1000)")
     private String donateTitle; //nui
 
-    @Column(name = "donateContent")
+    @Column(name = "donateContent",columnDefinition="VARCHAR(1000)")
     private String donateContent; //nui
 
 }
