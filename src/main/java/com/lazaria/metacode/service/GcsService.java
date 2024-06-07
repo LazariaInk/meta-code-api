@@ -28,7 +28,8 @@ public class GcsService {
                       @Value("${GCS_BUCKET_NAME}") String bucketName) throws IOException {
         this.bucketName = bucketName;
         try {
-            GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ByteArrayInputStream(credentials.getBytes()));
+            //GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ByteArrayInputStream(credentials.getBytes()));
+            GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ByteArrayInputStream(System.getenv("GOOGLE_CLOUD_CREDENTIALS").getBytes()));
             this.storage = StorageOptions.newBuilder()
                     .setProjectId(projectId)
                     .setCredentials(googleCredentials)
