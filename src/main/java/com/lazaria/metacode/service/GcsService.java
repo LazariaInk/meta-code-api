@@ -34,8 +34,8 @@ public class GcsService {
                     .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(decodedCredentials)))
                     .build()
                     .getService();
-        } catch (Exception e) {
-            throw new IOException("Failed to initialize GcsService with provided credentials", e);
+        } catch (IllegalArgumentException | IOException e) {
+            throw new IOException("Failed to decode Google Cloud credentials: " + e.getMessage(), e);
         }
     }
 
