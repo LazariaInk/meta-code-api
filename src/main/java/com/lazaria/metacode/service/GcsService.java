@@ -23,9 +23,9 @@ public class GcsService {
     private final Storage storage;
     private final String bucketName;
 
-    public GcsService(@Value("${GCP_CREDENTIALS}") String credentials,
-                      @Value("${GCP_PROJECT_ID}") String projectId,
-                      @Value("${GCP_STORAGE_BUCKET}") String bucketName) throws IOException {
+    public GcsService(@Value("${GOOGLE_CLOUD_CREDENTIALS}") String credentials,
+                      @Value("${GOOGLE_CLOUD_PROJECT_ID}") String projectId,
+                      @Value("${GCS_BUCKET_NAME}") String bucketName) throws IOException {
         this.bucketName = bucketName;
         byte[] decodedCredentials = Base64.getDecoder().decode(credentials);
         this.storage = StorageOptions.newBuilder()
