@@ -27,12 +27,16 @@ public class GcsService {
                       @Value("${GOOGLE_CLOUD_PROJECT_ID}") String projectId,
                       @Value("${GCS_BUCKET_NAME}") String bucketName) throws IOException {
         this.bucketName = bucketName;
-        byte[] decodedCredentials = Base64.getDecoder().decode(credentials);
-        this.storage = StorageOptions.newBuilder()
-                .setProjectId(projectId)
-                .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(decodedCredentials)))
-                .build()
-                .getService();
+        try {
+            byte[] decodedCredentials = Base64.getDecoder().decode(credentials);
+            this.storage = StorageOptions.newBuilder()
+                    .setProjectId(projectId)
+                    .setCredentials(GoogleCredentials.fromStream(new ByteArrayInputStream(decodedCredentials)))
+                    .build()
+                    .getService();
+        } catch (Exception e) {
+            throw new IOException("Failed to initialize GcsService with provided credentials", e);
+        }
     }
 
     public List<String> getTopics() {
