@@ -58,25 +58,35 @@ public class GcsService {
     public List<String> getLessons(String topic, String chapter) {
         Bucket bucket = storage.get(bucketName);
         String prefix = topic + "/" + chapter + "/";
-        return StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
+        System.out.println("Listing blobs with prefix: " + prefix);
+        List<String> lessonFolders = StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .map(Blob::getName)
-                .filter(name -> name.startsWith(prefix) && name.endsWith(".html"))
-                .map(name -> name.replace(prefix, ""))
+                .filter(name -> name.startsWith(prefix) && name.endsWith("/"))
+                .map(name -> name.substring(prefix.length(), name.length() - 1))
                 .collect(Collectors.toList());
+
+        System.out.println("Found lesson folders: " + lessonFolders);
+
+        List<String> lessonFiles = lessonFolders.stream()
+                .flatMap(folder -> StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix + folder + "/")).iterateAll().spliterator(), false)
+                        .map(Blob::getName)
+                        .filter(name -> name.endsWith(".html"))
+                        .map(name -> name.replace(prefix, ""))
+                )
+                .collect(Collectors.toList());
+
+        System.out.println("Found lesson files: " + lessonFiles);
+        return lessonFiles;
     }
 
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
-        String prefix = topic + "/" + chapter + "/" + lesson + "/";
-        Blob htmlBlob = StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().spliterator(), false)
-                .filter(blob -> blob.getName().endsWith(".html"))
-                .findFirst()
-                .orElse(null);
-
-        if (htmlBlob != null) {
-            return new String(htmlBlob.getContent());
+        String filePath = topic + "/" + chapter + "/" + lesson;
+        Blob blob = bucket.get(filePath);
+        if (blob != null && blob.exists()) {
+            return new String(blob.getContent());
         } else {
-            throw new RuntimeException("No HTML file found for lesson: " + lesson);
+            throw new RuntimeException("No HTML file found at path: " + filePath);
         }
     }
 
