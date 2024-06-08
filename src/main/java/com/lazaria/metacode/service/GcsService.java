@@ -50,7 +50,7 @@ public class GcsService {
         return StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(topic + "/"), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .map(Blob::getName)
                 .filter(name -> name.startsWith(topic + "/") && name.endsWith("/"))
-                .map(name -> name.replace(topic + "/", "").replace("/", ""))
+                .map(name -> name.substring(topic.length() + 1, name.length() - 1))
                 .sorted((a, b) -> Integer.compare(getNumber(a), getNumber(b)))
                 .collect(Collectors.toList());
     }
@@ -64,7 +64,6 @@ public class GcsService {
                 .map(name -> name.replace(prefix, ""))
                 .collect(Collectors.toList());
     }
-
 
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
