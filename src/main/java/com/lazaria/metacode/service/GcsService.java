@@ -49,10 +49,18 @@ public class GcsService {
 
     public List<String> getChapters(String topic) {
         Bucket bucket = storage.get(bucketName);
-        return StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(topic + "/"), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
+        String encodedTopic;
+        try {
+            encodedTopic = URLEncoder.encode(topic, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to encode URL", e);
+        }
+
+        String prefix = encodedTopic + "/";
+        return StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .map(Blob::getName)
-                .filter(name -> name.startsWith(topic + "/") && name.endsWith("/"))
-                .map(name -> name.substring(topic.length() + 1, name.length() - 1))
+                .filter(name -> name.startsWith(encodedTopic + "/") && name.endsWith("/"))
+                .map(name -> name.substring(encodedTopic.length() + 1, name.length() - 1))
                 .sorted((a, b) -> Integer.compare(getNumber(a), getNumber(b)))
                 .collect(Collectors.toList());
     }
