@@ -6,13 +6,10 @@ import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -39,7 +36,6 @@ public class GcsService {
             throw new IOException("Failed to initialize Google Cloud Storage service: " + e.getMessage(), e);
         }
     }
-
 
     public List<String> getTopics() {
         Bucket bucket = storage.get(bucketName);
@@ -73,8 +69,17 @@ public class GcsService {
 
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
-        Blob blob = bucket.get(topic + "/" + chapter + "/" + lesson + "/index.html");
-        return new String(blob.getContent());
+        String prefix = topic + "/" + chapter + "/" + lesson + "/";
+        Blob htmlBlob = StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().spliterator(), false)
+                .filter(blob -> blob.getName().endsWith(".html"))
+                .findFirst()
+                .orElse(null);
+
+        if (htmlBlob != null) {
+            return new String(htmlBlob.getContent());
+        } else {
+            throw new RuntimeException("No HTML file found for lesson: " + lesson);
+        }
     }
 
     private int getNumber(String name) {
