@@ -59,13 +59,7 @@ public class GcsService {
 
     public List<String> getLessons(String topic, String chapter) {
         Bucket bucket = storage.get(bucketName);
-        String prefix;
-        try {
-            // Construiți prefixul și encodați-l pentru a gestiona spațiile și caracterele speciale
-            prefix = URLEncoder.encode(topic, "UTF-8") + "/" + URLEncoder.encode(chapter, "UTF-8") + "/";
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Failed to encode URL", e);
-        }
+        String prefix = topic + "/" + chapter + "/";
         System.out.println("Listing blobs with prefix: " + prefix);
 
         // Listați toate bloburile sub prefixul dat
@@ -85,6 +79,7 @@ public class GcsService {
         System.out.println("Filtered lesson files: " + lessonFiles);
         return lessonFiles;
     }
+
 
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
