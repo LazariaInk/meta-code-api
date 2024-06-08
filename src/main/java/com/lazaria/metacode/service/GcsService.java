@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -57,17 +59,23 @@ public class GcsService {
 
     public List<String> getLessons(String topic, String chapter) {
         Bucket bucket = storage.get(bucketName);
-        String prefix = topic + "/" + chapter + "/";
+        String prefix;
+        try {
+            // Construiți prefixul și encodați-l pentru a gestiona spațiile și caracterele speciale
+            prefix = URLEncoder.encode(topic, "UTF-8") + "/" + URLEncoder.encode(chapter, "UTF-8") + "/";
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to encode URL", e);
+        }
         System.out.println("Listing blobs with prefix: " + prefix);
 
-        // List all blobs under the given prefix
+        // Listați toate bloburile sub prefixul dat
         List<Blob> blobs = StreamSupport.stream(
                         bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .collect(Collectors.toList());
 
         System.out.println("All blobs found: " + blobs.stream().map(Blob::getName).collect(Collectors.toList()));
 
-        // Filter and return only HTML files
+        // Filtrați și returnați doar fișierele HTML
         List<String> lessonFiles = blobs.stream()
                 .map(Blob::getName)
                 .filter(name -> name.endsWith(".html"))
