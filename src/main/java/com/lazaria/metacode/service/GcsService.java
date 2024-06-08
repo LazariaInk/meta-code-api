@@ -25,7 +25,6 @@ public class GcsService {
                       @Value("${GCS_BUCKET_NAME}") String bucketName) throws IOException {
         this.bucketName = bucketName;
         try {
-            //GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ByteArrayInputStream(credentials.getBytes()));
             GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ByteArrayInputStream(System.getenv("GOOGLE_CLOUD_CREDENTIALS").getBytes()));
             this.storage = StorageOptions.newBuilder()
                     .setProjectId(projectId)
@@ -61,9 +60,8 @@ public class GcsService {
         String prefix = topic + "/" + chapter + "/";
         return StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .map(Blob::getName)
-                .filter(name -> name.startsWith(prefix) && name.endsWith("/"))
-                .map(name -> name.replace(prefix, "").replace("/", ""))
-                .sorted((a, b) -> Integer.compare(getNumber(a), getNumber(b)))
+                .filter(name -> name.startsWith(prefix) && name.endsWith(".html"))
+                .map(name -> name.replace(prefix, ""))
                 .collect(Collectors.toList());
     }
 
@@ -86,7 +84,7 @@ public class GcsService {
         try {
             return Integer.parseInt(name.split("\\.")[0]);
         } catch (NumberFormatException e) {
-            return Integer.MAX_VALUE; // or some default value
+            return Integer.MAX_VALUE;
         }
     }
 }
