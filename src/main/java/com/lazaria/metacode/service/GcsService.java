@@ -1,5 +1,3 @@
-package com.lazaria.metacode.service;
-
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Bucket;
@@ -61,15 +59,15 @@ public class GcsService {
         System.out.println("Listing blobs with prefix: " + prefix);
 
         // List all blobs under the given prefix
-        List<String> blobs = StreamSupport.stream(
-                        bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().spliterator(), false)
-                .map(Blob::getName)
+        List<Blob> blobs = StreamSupport.stream(
+                        bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .collect(Collectors.toList());
 
-        System.out.println("All blobs found: " + blobs);
+        System.out.println("All blobs found: " + blobs.stream().map(Blob::getName).collect(Collectors.toList()));
 
         // Filter and return only HTML files
         List<String> lessonFiles = blobs.stream()
+                .map(Blob::getName)
                 .filter(name -> name.endsWith(".html"))
                 .map(name -> name.substring(prefix.length()))
                 .collect(Collectors.toList());
@@ -78,13 +76,15 @@ public class GcsService {
         return lessonFiles;
     }
 
-
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
         String filePath = topic + "/" + chapter + "/" + lesson;
+        System.out.println("Fetching content from file path: " + filePath);
         Blob blob = bucket.get(filePath);
         if (blob != null && blob.exists()) {
-            return new String(blob.getContent());
+            String content = new String(blob.getContent());
+            System.out.println("Fetched content: " + content);
+            return content;
         } else {
             throw new RuntimeException("No HTML file found at path: " + filePath);
         }
