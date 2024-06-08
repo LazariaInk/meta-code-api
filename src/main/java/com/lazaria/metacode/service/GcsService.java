@@ -59,25 +59,25 @@ public class GcsService {
         Bucket bucket = storage.get(bucketName);
         String prefix = topic + "/" + chapter + "/";
         System.out.println("Listing blobs with prefix: " + prefix);
-        List<String> lessonFolders = StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
+
+        // List all blobs under the given prefix
+        List<String> blobs = StreamSupport.stream(
+                        bucket.list(Storage.BlobListOption.prefix(prefix)).iterateAll().spliterator(), false)
                 .map(Blob::getName)
-                .filter(name -> name.startsWith(prefix) && name.endsWith("/"))
-                .map(name -> name.substring(prefix.length(), name.length() - 1))
                 .collect(Collectors.toList());
 
-        System.out.println("Found lesson folders: " + lessonFolders);
+        System.out.println("All blobs found: " + blobs);
 
-        List<String> lessonFiles = lessonFolders.stream()
-                .flatMap(folder -> StreamSupport.stream(bucket.list(Storage.BlobListOption.prefix(prefix + folder + "/")).iterateAll().spliterator(), false)
-                        .map(Blob::getName)
-                        .filter(name -> name.endsWith(".html"))
-                        .map(name -> name.replace(prefix, ""))
-                )
+        // Filter and return only HTML files
+        List<String> lessonFiles = blobs.stream()
+                .filter(name -> name.endsWith(".html"))
+                .map(name -> name.substring(prefix.length()))
                 .collect(Collectors.toList());
 
-        System.out.println("Found lesson files: " + lessonFiles);
+        System.out.println("Filtered lesson files: " + lessonFiles);
         return lessonFiles;
     }
+
 
     public String getLessonContent(String topic, String chapter, String lesson) {
         Bucket bucket = storage.get(bucketName);
