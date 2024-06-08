@@ -77,19 +77,17 @@ public class GcsService {
 
         System.out.println("All blobs found: " + blobs.stream().map(Blob::getName).collect(Collectors.toList()));
 
-        // Afisare nume fișiere pentru depanare
-        blobs.forEach(blob -> System.out.println(blob.getName()));
-
-        // Filtrați și returnați doar fișierele HTML
-        List<String> lessonFiles = blobs.stream()
+        // Filtrați și returnați doar folderele
+        List<String> lessonFolders = blobs.stream()
                 .map(Blob::getName)
-                .filter(name -> name.endsWith(".html"))
-                .map(name -> name.substring(prefix.length()))
+                .filter(name -> name.endsWith("/") && !name.equals(prefix))
+                .map(name -> name.substring(prefix.length(), name.length() - 1))
                 .collect(Collectors.toList());
 
-        System.out.println("Filtered lesson files: " + lessonFiles);
-        return lessonFiles;
+        System.out.println("Filtered lesson folders: " + lessonFolders);
+        return lessonFolders;
     }
+
 
 
 
