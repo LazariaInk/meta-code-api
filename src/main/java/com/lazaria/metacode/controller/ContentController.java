@@ -16,21 +16,25 @@ public class ContentController {
     private GcsService gcsService;
 
     @GetMapping("/topics")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<String> getTopics() {
         return gcsService.getTopics();
     }
 
     @GetMapping("/topics/{topic}/chapters")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<String> getChapters(@PathVariable String topic) {
         return gcsService.getChapters(topic);
     }
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/lessons")
+    @CrossOrigin(origins = "http://localhost:3000")
     public List<String> getLessons(@PathVariable String topic, @PathVariable String chapter) {
         return gcsService.getLessons(topic, chapter);
     }
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/lessons/{lesson}")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String getLessonContent(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
         return gcsService.getLessonContent(topic, chapter, lesson);
     }
