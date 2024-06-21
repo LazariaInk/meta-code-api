@@ -75,17 +75,11 @@ public class GcsService {
         List<Blob> blobs = StreamSupport.stream(
                         bucket.list(Storage.BlobListOption.prefix(prefix), Storage.BlobListOption.currentDirectory()).iterateAll().spliterator(), false)
                 .collect(Collectors.toList());
-
-        System.out.println("All blobs found: " + blobs.stream().map(Blob::getName).collect(Collectors.toList()));
-
-        // Check the exact names of blobs
-        blobs.forEach(blob -> System.out.println("Blob name: " + blob.getName()));
-
-        // Filter and return only folders
         List<String> lessonFolders = blobs.stream()
                 .map(Blob::getName)
                 .filter(name -> name.endsWith("/") && !name.equals(prefix))
                 .map(name -> name.substring(prefix.length(), name.length() - 1))
+                .sorted((prevLesson, nextLesson)->Integer.compare(getNumber(prevLesson), getNumber(nextLesson)))
                 .collect(Collectors.toList());
 
         System.out.println("Filtered lesson folders: " + lessonFolders);
