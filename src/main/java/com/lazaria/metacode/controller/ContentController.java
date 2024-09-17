@@ -91,9 +91,6 @@ public class ContentController {
         return null;
     }
 
-
-
-
     @GetMapping("/topics/{topic}/chapters/{chapter}/previous")
     public String getPreviousChapterLastLesson(@PathVariable String topic, @PathVariable String chapter) {
         List<String> chapters = gcsService.getChapters(topic);
