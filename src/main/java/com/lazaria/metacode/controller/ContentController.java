@@ -38,4 +38,27 @@ public class ContentController {
     public String getLessonContent(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
         return gcsService.getLessonContent(topic, chapter, lesson);
     }
+
+    @GetMapping("/topics/{topic}/chapters/{chapter}/lessons/{lesson}/next")
+    public String getNextLesson(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
+        List<String> lessons = gcsService.getLessons(topic, chapter);
+        int index = lessons.indexOf(lesson);
+
+        if (index != -1 && index < lessons.size() - 1) {
+            return lessons.get(index + 1);
+        }
+        return null;
+    }
+
+    @GetMapping("/topics/{topic}/chapters/{chapter}/lessons/{lesson}/previous")
+    public String getPreviousLesson(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
+        List<String> lessons = gcsService.getLessons(topic, chapter);
+        int index = lessons.indexOf(lesson);
+
+        if (index > 0) {
+            return lessons.get(index - 1);
+        }
+        return null;
+    }
+
 }
