@@ -5,7 +5,6 @@ import com.lazaria.metacode.service.GcsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -39,102 +38,4 @@ public class ContentController {
     public String getLessonContent(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
         return gcsService.getLessonContent(topic, chapter, lesson);
     }
-
-    @GetMapping("/topics/{topic}/chapters/{chapter}/lessons/{lesson}/next")
-    public String getNextLesson(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
-        List<String> lessons = gcsService.getLessons(topic, chapter);
-        int currentLessonNumber = extractLessonNumber(lesson);
-        int index = -1;
-
-        for (int i = 0; i < lessons.size(); i++) {
-            int lessonNumber = extractLessonNumber(lessons.get(i));
-            if (lessonNumber == currentLessonNumber) {
-                index = i;
-                break;
-            }
-        }
-
-        if (index != -1 && index < lessons.size() - 1) {
-            return lessons.get(index + 1);
-        }
-        return null;
-    }
-
-    private int extractLessonNumber(String lesson) {
-        try {
-            String[] parts = lesson.split("\\.");
-            return Integer.parseInt(parts[0]);
-        } catch (Exception e) {
-            return -1;
-        }
-    }
-
-
-    @GetMapping("/topics/{topic}/chapters/{chapter}/lessons/{lesson}/previous")
-    public String getPreviousLesson(@PathVariable String topic, @PathVariable String chapter, @PathVariable String lesson) {
-        List<String> lessons = gcsService.getLessons(topic, chapter);
-        int index = lessons.indexOf(lesson);
-
-        if (index > 0) {
-            return lessons.get(index - 1);
-        }
-        return null;
-    }
-
-    @GetMapping("/topics/{topic}/chapters/{chapter}/next")
-    public String getNextChapterFirstLesson(@PathVariable String topic, @PathVariable String chapter) {
-        String decodedChapter = chapter.replace("_", " ");
-        List<String> chapters = gcsService.getChapters(topic);
-        System.out.println("Chapters for topic " + topic + ": " + chapters);
-        int currentChapterNumber = extractChapterNumber(decodedChapter);
-        int index = -1;
-        for (int i = 0; i < chapters.size(); i++) {
-            int chapterNumber = extractChapterNumber(chapters.get(i));
-            if (chapterNumber == currentChapterNumber) {
-                index = i;
-                break;
-            }
-        }
-        System.out.println("Current chapter: " + decodedChapter + ", index: " + index);
-        if (index != -1 && index < chapters.size() - 1) {
-            String nextChapter = chapters.get(index + 1);
-            List<String> lessonsInNextChapter = gcsService.getLessons(topic, nextChapter);
-            System.out.println("Next chapter: " + nextChapter);
-            System.out.println("Lessons in next chapter: " + lessonsInNextChapter);
-            if (!lessonsInNextChapter.isEmpty()) {
-                return nextChapter + "|" + lessonsInNextChapter.get(0);
-            } else {
-                System.out.println("No lessons found in next chapter.");
-            }
-        } else {
-            System.out.println("No next chapter available or current chapter not found.");
-        }
-        return null;
-    }
-
-    private int extractChapterNumber(String chapter) {
-        try {
-            String[] parts = chapter.split("\\.");
-            return Integer.parseInt(parts[0]);  // Extragem prima parte ca număr
-        } catch (Exception e) {
-            return -1;  // Returnăm -1 în caz de eroare
-        }
-    }
-
-    @GetMapping("/topics/{topic}/chapters/{chapter}/previous")
-    public String getPreviousChapterLastLesson(@PathVariable String topic, @PathVariable String chapter) {
-        List<String> chapters = gcsService.getChapters(topic);
-        int index = chapters.indexOf(chapter);
-
-        if (index > 0) {
-            String previousChapter = chapters.get(index - 1);
-            List<String> lessonsInPreviousChapter = gcsService.getLessons(topic, previousChapter);
-            if (!lessonsInPreviousChapter.isEmpty()) {
-                return previousChapter + "|" + lessonsInPreviousChapter.get(lessonsInPreviousChapter.size() - 1);
-            }
-        }
-        return null;
-    }
-
-
 }
