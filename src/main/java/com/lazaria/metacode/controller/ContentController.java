@@ -66,16 +66,22 @@ public class ContentController {
     public String getNextChapterFirstLesson(@PathVariable String topic, @PathVariable String chapter) {
         String decodedChapter = chapter.replace("_", " ");
         List<String> chapters = gcsService.getChapters(topic);
+
+        // Adaugă mai multe loguri pentru a verifica ce capitole sunt disponibile și dacă se găsește capitolul corect
         System.out.println("Chapters for topic " + topic + ": " + chapters);
+
         int index = chapters.indexOf(decodedChapter);
         System.out.println("Current chapter: " + decodedChapter + ", index: " + index);
+
         if (index != -1 && index < chapters.size() - 1) {
             String nextChapter = chapters.get(index + 1);
             List<String> lessonsInNextChapter = gcsService.getLessons(topic, nextChapter);
+
             System.out.println("Next chapter: " + nextChapter);
             System.out.println("Lessons in next chapter: " + lessonsInNextChapter);
 
             if (!lessonsInNextChapter.isEmpty()) {
+                System.out.println("Returning next chapter and first lesson: " + nextChapter + " | " + lessonsInNextChapter.get(0));
                 return nextChapter + "|" + lessonsInNextChapter.get(0);
             } else {
                 System.out.println("No lessons found in next chapter.");
@@ -86,6 +92,7 @@ public class ContentController {
 
         return null;
     }
+
 
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/previous")
