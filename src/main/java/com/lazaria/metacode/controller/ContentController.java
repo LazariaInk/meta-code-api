@@ -64,16 +64,31 @@ public class ContentController {
     @GetMapping("/topics/{topic}/chapters/{chapter}/next")
     public String getNextChapterFirstLesson(@PathVariable String topic, @PathVariable String chapter) {
         List<String> chapters = gcsService.getChapters(topic);
+
+        System.out.println("Chapters for topic " + topic + ": " + chapters);  // Debugging line
         int index = chapters.indexOf(chapter);
+
+        System.out.println("Current chapter index: " + index);  // Debugging line
+
         if (index != -1 && index < chapters.size() - 1) {
             String nextChapter = chapters.get(index + 1);
             List<String> lessonsInNextChapter = gcsService.getLessons(topic, nextChapter);
+
+            System.out.println("Next chapter: " + nextChapter);  // Debugging line
+            System.out.println("Lessons in next chapter: " + lessonsInNextChapter);  // Debugging line
+
             if (!lessonsInNextChapter.isEmpty()) {
                 return nextChapter + "|" + lessonsInNextChapter.get(0);
+            } else {
+                System.out.println("No lessons found in next chapter.");  // Debugging line
             }
+        } else {
+            System.out.println("No next chapter available or current chapter not found.");  // Debugging line
         }
+
         return null;
     }
+
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/previous")
     public String getPreviousChapterLastLesson(@PathVariable String topic, @PathVariable String chapter) {
