@@ -64,18 +64,14 @@ public class ContentController {
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/next")
     public String getNextChapterFirstLesson(@PathVariable String topic, @PathVariable String chapter) {
-        String decodedChapter = java.net.URLDecoder.decode(chapter, StandardCharsets.UTF_8);  // Decodăm capitolul
+        String decodedChapter = chapter.replace("_", " ");
         List<String> chapters = gcsService.getChapters(topic);
-
         System.out.println("Chapters for topic " + topic + ": " + chapters);
-        int index = chapters.indexOf(decodedChapter);  // Căutăm capitolul decodat
-
+        int index = chapters.indexOf(decodedChapter);
         System.out.println("Current chapter: " + decodedChapter + ", index: " + index);
-
         if (index != -1 && index < chapters.size() - 1) {
             String nextChapter = chapters.get(index + 1);
             List<String> lessonsInNextChapter = gcsService.getLessons(topic, nextChapter);
-
             System.out.println("Next chapter: " + nextChapter);
             System.out.println("Lessons in next chapter: " + lessonsInNextChapter);
 
@@ -90,6 +86,7 @@ public class ContentController {
 
         return null;
     }
+
 
     @GetMapping("/topics/{topic}/chapters/{chapter}/previous")
     public String getPreviousChapterLastLesson(@PathVariable String topic, @PathVariable String chapter) {
